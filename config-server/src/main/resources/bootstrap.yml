@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: configserver
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/tcero76/microservices-demo
+          searchPaths: config-server-repository
+          default-label: master
+          username: tcero76
+          clone-on-start: true
+    fail-fast: true
+  security:
+    user:
+      name: spring_cloud_user
+      password: '{cipher}73631d2d6f17ac3501f7aa611dbe41eef8d6965000c55ca58cba743ae748a3bb4c7f647c4dce8979adedb30ee9713910'

@@ -1,0 +1,157 @@
+{
+    "name": "TsList",
+    "type": "record",
+    "namespace": "cl.sugarfever.kafka.avro",
+    "version": "1",
+    "fields": [
+        {
+            "name": "Tses",
+            "type": {
+                "type": "array",
+                "java-class": "java.util.List",
+                "items": {
+                    "type": "record",
+                    "name": "Ts",
+                    "fields": [
+                        {
+                            "name" : "id_ts",
+                            "type" : {
+                                "type" : "string",
+                                "logicalType": "UUID"
+                            }
+                        },
+                        {
+                            "name" : "idpagina",
+                            "type" : "int"
+                        }, {
+                            "name" : "sexo",
+                            "type" : "string",
+                            "default": ""
+                        }, {
+                            "name" : "edad",
+                            "type" : "int",
+                            "default": 0
+                        }, {
+                            "name" : "nombre",
+                            "type" : "string",
+                            "default": ""
+                        }, {
+                            "name" : "medidas",
+                            "type" : "string",
+                            "default": ""
+                        }, {
+                            "name" : "seccion",
+                            "type" : "string",
+                            "default": ""
+                        }, {
+                            "name" : "depilacion",
+                            "type" : "string",
+                            "default": ""
+                        }, {
+                            "name" : "ubicacion",
+                            "type" : "string",
+                            "default": ""
+                        }, {
+                            "name" : "horario",
+                            "type" : "string",
+                            "default": ""
+                        }, {
+                            "name" : "descripcion",
+                            "type" : "string",
+                            "default": ""
+                        }, {
+                            "name" : "atencion",
+                            "type" : "string",
+                            "default": ""
+                        }, {
+                            "name" : "telefono",
+                            "type" : "string",
+                            "default": "0000 0000"
+                        }, {
+                            "name" : "estatura",
+                            "type" : "string"
+                        }, {
+                            "name" : "valor",
+                            "type" : "string",
+                            "default": ""
+                        }, {
+                            "name" : "video",
+                            "type" : "string",
+                            "default": ""
+                        }, {
+                            "name" : "imagen",
+                            "type" : "string",
+                            "default": ""
+                        }, {
+                            "name" : "idjob",
+                            "type" : "long",
+                            "default": 0
+                        }, {
+                            "name" : "sitio",
+                            "type" : "string",
+                            "default": ""
+                        }, {
+                            "name" : "cartel",
+                            "type" : "string",
+                            "default": ""
+                        }, {
+                            "name" : "ciudad",
+                            "type" : "string",
+                            "default": ""
+                        }, {
+                            "name" : "servicios",
+                            "type" : {
+                                "type" : "array",
+                                "items" : {
+                                    "type" : "record",
+                                    "name" : "Servicio",
+                                    "fields" : [ {
+                                        "name" : "idservicio",
+                                        "type" : {
+                                            "type" : "string",
+                                            "logicalType": "UUID"
+                                        }
+                                    }, {
+                                        "name" : "nombre",
+                                        "type" : "string"
+                                    }, {
+                                        "name" : "adicional",
+                                        "type" : "boolean"
+                                    } ]
+                                },
+                                "java-class" : "java.util.List"
+                            },
+                            "default": []
+                        }, {
+                            "name" : "imagenes",
+                            "type" : {
+                                "type" : "array",
+                                "items" : {
+                                    "type" : "record",
+                                    "name" : "Imagen",
+                                    "fields" : [ {
+                                        "name" : "idimagen",
+                                        "type" : {
+                                            "type" : "string",
+                                            "logicalType": "UUID"
+                                        }
+                                    }, {
+                                        "name" : "url",
+                                        "type" : "string"
+                                    } ]
+                                },
+                                "java-class" : "java.util.List"
+                            },
+                            "default": []
+                        }, {
+                            "name" : "fecharegistro",
+                            "type": "long",
+                            "logicalType": "timestamp-millis",
+                            "default": 0
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: outbox-to-kafka-service
+  profiles:
+    active: outbox_to_kafka
+  cloud:
+    config:
+      name: outbox-to-kafka-service,config-client
+      uri: http://localhost:8888
+      username: spring_cloud_user
+      password: springCloud_Pwd!
