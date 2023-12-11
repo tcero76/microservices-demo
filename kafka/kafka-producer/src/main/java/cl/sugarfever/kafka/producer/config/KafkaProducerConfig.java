@@ -1,4 +1,4 @@
-package cl.sugarfever.producer.config;
+package cl.sugarfever.kafka.producer.config;
 
 import cl.sugarfever.config.data.service.config.KafkaConfigData;
 import cl.sugarfever.config.data.service.config.KafkaProducerConfigData;

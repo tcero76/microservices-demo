@@ -1,4 +1,4 @@
-package cl.sugarfever.producer.service;
+package cl.sugarfever.kafka.producer.service;
 
 import cl.sugarfever.outbox.OutboxStatus;
 import org.apache.avro.specific.SpecificRecordBase;

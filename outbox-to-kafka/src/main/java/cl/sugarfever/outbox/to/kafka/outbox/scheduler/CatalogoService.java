@@ -8,7 +8,7 @@ import cl.sugarfever.outbox.to.kafka.outbox.message.TsMessageMapper;
 import cl.sugarfever.postgres.model.Outbox;
 import cl.sugarfever.postgres.outbox.TsScrapEventPayload;
 import cl.sugarfever.postgres.repo.PostgresCatalogoOutbox;
-import cl.sugarfever.producer.service.impl.ScrapKafkaProducer;
+import cl.sugarfever.kafka.producer.service.impl.ScrapKafkaProducer;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;

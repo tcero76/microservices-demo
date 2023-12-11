@@ -1,7 +1,7 @@
-package cl.sugarfever.producer.service.impl;
+package cl.sugarfever.kafka.producer.service.impl;
 
+import cl.sugarfever.kafka.producer.service.KafkaProducer;
 import cl.sugarfever.outbox.OutboxStatus;
-import cl.sugarfever.producer.service.KafkaProducer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;

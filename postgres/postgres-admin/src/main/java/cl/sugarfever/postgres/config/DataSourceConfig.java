@@ -2,10 +2,6 @@ package cl.sugarfever.postgres.config;
 
 import cl.sugarfever.config.data.service.config.PostGresConfigData;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.BeanClassLoaderAware;
-import org.springframework.boot.autoconfigure.batch.BatchDataSource;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
-import org.springframework.boot.jdbc.DataSourceInitializationMode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -22,7 +18,6 @@ public class DataSourceConfig {
     private final PostGresConfigData postGresConfigData;
     @Bean
     @Primary
-    @BatchDataSource
     public DataSource postdbDataSource() throws SQLException {
         SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
         Properties properties = new Properties();

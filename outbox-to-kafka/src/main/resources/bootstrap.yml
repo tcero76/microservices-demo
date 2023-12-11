@@ -8,4 +8,4 @@ spring:
       name: outbox-to-kafka-service,config-client
       uri: http://localhost:8888
       username: spring_cloud_user
-      password: springCloud_Pwd!
+      password: '{cipher}a671639095a243b831a90fd4276bab76e900e9bbdea02eb1dab3b5f67cc414cb46d364ec5c7ef71042632d9496fbd263'

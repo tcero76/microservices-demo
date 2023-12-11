@@ -1,4 +1,4 @@
-package cl.sugarfever.consumer.config;
+package cl.sugarfever.kafka.consumer.config;
 
 import cl.sugarfever.config.data.service.config.KafkaConfigData;
 import cl.sugarfever.config.data.service.config.KafkaConsumerConfigData;
