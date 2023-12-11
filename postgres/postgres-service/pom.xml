@@ -7,7 +7,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>postgres-service</artifactId>
-    <name>Archetype - postgres-service</name>
+    <name>postgres-service</name>
     <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>

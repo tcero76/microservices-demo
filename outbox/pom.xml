@@ -7,7 +7,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>outbox</artifactId>
-    <name>Archetype - outbox</name>
+    <name>outbox</name>
     <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>

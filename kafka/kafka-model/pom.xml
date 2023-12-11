@@ -7,7 +7,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>kafka-model</artifactId>
-    <name>Archetype - kafka-model</name>
+    <name>kafka-model</name>
     <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>

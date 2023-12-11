@@ -7,7 +7,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>postgres-admin</artifactId>
-    <name>Archetype - postgres-admin</name>
+    <name>postgres-admin</name>
     <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>

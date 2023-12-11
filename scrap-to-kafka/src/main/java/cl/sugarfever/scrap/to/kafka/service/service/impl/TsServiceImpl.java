@@ -13,10 +13,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class TsServiceImpl implements TsService {
-
-
     private final UpdateTs<Ts> postgresService;
-
     @Override
     @Transactional
     public void save(List<Ts> tses) {

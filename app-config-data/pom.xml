@@ -8,7 +8,6 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>app-config-data</artifactId>
     <name>app-config-data</name>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
