@@ -38,4 +38,4 @@ postgres-config:
   password: root
   database-platform: org.hibernate.dialect.PostgreSQL9Dialect
   show-sql: false
-  initialization-mode: always
+  initialization-mode: never

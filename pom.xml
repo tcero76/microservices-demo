@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.example</groupId>
+  <groupId>tcero76</groupId>
   <artifactId>backend</artifactId>
   <version>1.0-SNAPSHOT</version>
   <parent>
@@ -18,7 +18,12 @@
     <module>kafka</module>
     <module>common-config</module>
     <module>elastic</module>
-    <module>scrap-to-kafka</module>
+    <module>scrap-to-postgres</module>
+    <module>outbox-to-kafka</module>
+    <module>kafka-to-elasticsearch</module>
+    <module>elastic-query-service-common</module>
+    <module>reactive-elastic-query-service</module>
+    <module>scheduler</module>
   </modules>
   <name>backend</name>
 
@@ -52,43 +57,78 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>org.example</groupId>
+        <groupId>tcero76</groupId>
         <artifactId>app-config-data</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.example</groupId>
+        <groupId>tcero76</groupId>
         <artifactId>outbox</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.example</groupId>
+        <groupId>tcero76</groupId>
         <artifactId>postgres-model</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.example</groupId>
+        <groupId>tcero76</groupId>
         <artifactId>postgres-admin</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.example</groupId>
+        <groupId>tcero76</groupId>
         <artifactId>postgres-service</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.example</groupId>
+        <groupId>tcero76</groupId>
         <artifactId>kafka-model</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.example</groupId>
+        <groupId>tcero76</groupId>
+        <artifactId>kafka-producer</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>tcero76</groupId>
+        <artifactId>kafka-admin</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>tcero76</groupId>
+        <artifactId>kafka-consumer</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>tcero76</groupId>
         <artifactId>common-config</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.example</groupId>
+        <groupId>tcero76</groupId>
         <artifactId>elastic-model</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>tcero76</groupId>
+        <artifactId>elastic-index-client</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>tcero76</groupId>
+        <artifactId>elastic-config</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>tcero76</groupId>
+        <artifactId>elastic-query-service-common</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>tcero76</groupId>
+        <artifactId>scheduler</artifactId>
         <version>${project.version}</version>
       </dependency>
 
@@ -166,16 +206,27 @@
         <artifactId>spring-retry</artifactId>
         <version>${spring-retry.version}</version>
       </dependency>
+
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
         <version>${spring-boot.version}</version>
       </dependency>
-
       <dependency>
         <groupId>org.elasticsearch.client</groupId>
         <artifactId>elasticsearch-rest-high-level-client</artifactId>
         <version>${elastic.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.elasticsearch</groupId>
+        <artifactId>elasticsearch</artifactId>
+        <version>${elastic.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>${postgresql.version}</version>
       </dependency>
 
       <dependency>
@@ -193,6 +244,12 @@
         <groupId>org.projectlombok</groupId>
         <artifactId>lombok</artifactId>
         <version>${lombok.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.micrometer</groupId>
+        <artifactId>micrometer-registry-prometheus</artifactId>
+        <version>${micrometer-registry-prometheus.version}</version>
       </dependency>
 
     </dependencies>

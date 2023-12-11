@@ -1,8 +1,8 @@
 package cl.sugarfever.outbox.to.kafka.outbox.scheduler;
 
+import cl.sugarfever.common.util.scheduler.Scheduler;
 import cl.sugarfever.config.data.service.config.KafkaConfigData;
 import cl.sugarfever.kafka.avro.Ts;
-import cl.sugarfever.outbox.OutboxScheduler;
 import cl.sugarfever.outbox.OutboxStatus;
 import cl.sugarfever.outbox.to.kafka.outbox.message.TsMessageMapper;
 import cl.sugarfever.postgres.model.Outbox;
@@ -19,7 +19,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 @Slf4j
-public class CatalogoService implements OutboxScheduler {
+public class CatalogoService implements Scheduler {
 
     private final TsMessageMapper tsMessageMapper;
     private final PostgresCatalogoOutbox postgresCatalogoOutbox;
@@ -28,7 +28,7 @@ public class CatalogoService implements OutboxScheduler {
     @Override
     @Scheduled(fixedDelayString = "${outbox-to-kafka.scheduler-fixed-rate}",
             initialDelayString = "${outbox-to-kafka.scheduler-initial-delay}")
-    public void processOutboxMessage() {
+    public void process() {
         List<Outbox> events = postgresCatalogoOutbox.findByOutboxStatus(OutboxStatus.STARTED);
         log.info("CatalogoOutbox: número iniciado: {}", events.size());
         events.forEach(event -> {

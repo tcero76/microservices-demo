@@ -5,19 +5,20 @@ services:
     hostname: config-server
     container_name: config-server
     ports:
-      - "5007:5007"
+      - "5004:5004"
       - "8888:8888"
     volumes:
       - "./docker-logs:/workspace/config-server/logs"
     environment:
-      - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5007 -Xms128m -Xmx256m"
+      - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5004 -Xms128m -Xmx256m"
       - "ENCRYPT_KEY=${ENCRYPT_KEY}"
       - "SPRING_CLOUD_CONFIG_SERVER_GIT_USERNAME=${GIT_USERNAME}"
       - "SPRING_CLOUD_CONFIG_SERVER_GIT_PASSWORD=${GIT_PASSWORD}"
     networks:
       - ${GLOBAL_NETWORK:-services}
-  scrap-to-kafka:
-    image: tcero76/scrap.to.kafka:${SERVICE_VERSION:-latest}
+  scrap-to-postgres:
+    image: tcero76/scrap.to.postgres:${SERVICE_VERSION:-latest}
+    container_name: scrap-to-postgres
     ports:
       - "5005:5005"
     volumes:
@@ -25,20 +26,92 @@ services:
       - "./check-config-server-started.sh:/usr/local/bin/check-config-server-started.sh"
     user: root
     entrypoint: ["check-config-server-started.sh"]
-    depends_on:
-      - config-server
-      - postgres
     environment:
       - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -Xms128m -Xmx256m"
-#      - "LOGGING_LEVEL_COM_MICROSERVICES_DEMO=error"
-#      - "LOGGING_LEVEL_ROOT=error"
       - "SPRING_CLOUD_CONFIG_URI=http://config-server:8888"
       - "ENCRYPT_KEY=${ENCRYPT_KEY}"
       - "POSTGRES-CONFIG_URL=jdbc:postgresql://postgres:5432/postgres?currentSchema=catalogo&stringtype=unspecified"
-      - "POSTGRES-CONFIG_USERNAME=root"
-      - "POSTGRES-CONFIG_PASSWORD=root"
-      - "POSTGRES-CONFIG_DATABASE-PLATFORM=org.hibernate.dialect.PostgreSQL9Dialect"
+      - "POSTGRES-CONFIG_USERNAME=${POSTGRES_CONFIG_USERNAME}"
+      - "POSTGRES-CONFIG_PASSWORD=${POSTGRES_CONFIG_PASSWORD}"
       - "POSTGRES-CONFIG_SHOW-SQL=false"
+    depends_on:
+      - config-server
+      - postgres
+    networks:
+      - ${GLOBAL_NETWORK:-services}
+  outbox-to-kafka:
+    image: tcero76/outbox.to.kafka:${SERVICE_VERSION:-latest}
+    container_name: outbox-to-kafka
+    entrypoint: ["check-kafka-topics-created.sh"]
+    ports:
+      - "5006:5006"
+    volumes:
+      - "./docker-logs:/workspace/outbox-to-kafka/logs"
+      - "./check-kafka-topics-created.sh:/usr/local/bin/check-kafka-topics-created.sh"
+    user: root
+    environment:
+      - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5006 -Xms128m -Xmx256m"
+      - "SPRING_CLOUD_CONFIG_URI=http://config-server:8888"
+      - "POSTGRES-CONFIG_USERNAME=${POSTGRES_CONFIG_USERNAME}"
+      - "POSTGRES-CONFIG_PASSWORD=${POSTGRES_CONFIG_PASSWORD}"
+      - "POSTGRES-CONFIG_SHOW-SQL=false"
+      - "KAFKA-CONFIG_TOPIC-NAME=input-catalogo"
+      - "KAFKA-CONFIG_TOPIC-NAMES-TO-CREATE_0=input-catalogo"
+      - "KAFKA-CONFIG_BOOTSTRAP-SERVERS=kafka-broker-1:9092, kafka-broker-2:9092, kafka-broker-3:9092"
+      - "KAFKA-CONFIG_SCHEMA-REGISTRY-URL=http://schema-registry:8081"
+      - "ENCRYPT_KEY=${ENCRYPT_KEY}"
+    depends_on:
+      - config-server
+      - kafka-broker-1
+      - kafka-broker-2
+      - kafka-broker-3
+      - postgres
+    networks:
+      - ${GLOBAL_NETWORK:-services}
+  kafka-to-elastic:
+    image: tcero76/kafka.to.elastic:${SERVICE_VERSION:-latest}
+    container_name: kafka-to-elastic
+    entrypoint: [ "check-kafka-topics-created.sh" ]
+    ports:
+      - "5007:5007"
+    volumes:
+      - "./docker-logs:/workspace/outbox-to-kafka/logs"
+      - "./check-kafka-topics-created.sh:/usr/local/bin/check-kafka-topics-created.sh"
+    user: root
+    environment:
+      - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5007 -Xms128m -Xmx256m"
+      - "KAFKA-CONFIG_TOPIC-NAME=input-catalogo"
+      - "KAFKA-CONFIG_TOPIC-NAMES-TO-CREATE_0=input-catalogo"
+      - "KAFKA-CONFIG_BOOTSTRAP-SERVERS=kafka-broker-1:9092, kafka-broker-2:9092, kafka-broker-3:9092"
+      - "KAFKA-CONFIG_SCHEMA-REGISTRY-URL=http://schema-registry:8081"
+      - "ELASTIC-CONFIG_INDEX-NAME=scrap-index"
+      - "ELASTIC-CONFIG_CONNECTION-URL=http://elastic-1:9200"
+      - "ENCRYPT_KEY=${ENCRYPT_KEY}"
+    depends_on:
+      - config-server
+      - kafka-broker-1
+      - kafka-broker-2
+      - kafka-broker-3
+      - elastic-1
+      - elastic-2
+      - elastic-3
+    networks:
+      - ${GLOBAL_NETWORK:-services}
+  reactive-elastic-query-service:
+    image: tcero76/reactive.elastic.query.service:${SERVICE_VERSION:-latest}
+    container_name: reactive-elastic-query-service
+    ports:
+      - "5008:5008"
+    environment:
+      - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5008 -Xms128m -Xmx256m"
+      - "ELASTIC-CONFIG_INDEX-NAME=scrap-index"
+      - "ELASTIC-CONFIG_CONNECTION-URL=http://elastic-1:9200"
+      - "ENCRYPT_KEY=${ENCRYPT_KEY}"
+    depends_on:
+      - config-server
+      - elastic-1
+      - elastic-2
+      - elastic-3
     networks:
       - ${GLOBAL_NETWORK:-services}
 
@@ -341,8 +414,7 @@ services:
 #    environment:
 #      - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5016 -Xms128m -Xmx256m"
 #      - "LOGGING_LEVEL_ROOT=debug"
-#      - "SERVER_PORT=9090"
-#      - "SPRING_CLOUD_CONFIG_URI=http://config-server:8888"
+#      - "SERVER_PORT=9090"#      - "SPRING_CLOUD_CONFIG_URI=http://config-server:8888"
 #      - "SPRING_REDIS_HOST=redis"
 #      - "EUREKA_CLIENT_SERVICE-URL_DEFAULT-ZONE=http://discovery-service-2:8762/eureka/,http://discovery-service-1:8761/eureka/"
 #      - "ENCRYPT_KEY=${ENCRYPT_KEY}"

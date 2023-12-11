@@ -3,6 +3,7 @@ services:
   grafana:
     image: grafana/grafana:${GRAFANA_VERSION:-latest}
     hostname: grafana
+    container_name: grafana
     ports:
       - 3000:3000
     volumes:
@@ -15,6 +16,7 @@ services:
   prometheus:
     image: prom/prometheus:${PROMETHEUS_VERSION:-latest}
     hostname: prometheus
+    container_name: prometheus
     ports:
       - 9090:9090
     volumes:
