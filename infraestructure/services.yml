@@ -42,16 +42,17 @@ services:
   outbox-to-kafka:
     image: tcero76/outbox.to.kafka:${SERVICE_VERSION:-latest}
     container_name: outbox-to-kafka
-    entrypoint: ["check-kafka-topics-created.sh"]
+    entrypoint: ["check-config-server-started.sh"]
     ports:
       - "5006:5006"
     volumes:
       - "./docker-logs:/workspace/outbox-to-kafka/logs"
-      - "./check-kafka-topics-created.sh:/usr/local/bin/check-kafka-topics-created.sh"
+      - "./check-config-server-started.sh:/usr/local/bin/check-config-server-started.sh"
     user: root
     environment:
       - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5006 -Xms128m -Xmx256m"
       - "SPRING_CLOUD_CONFIG_URI=http://config-server:8888"
+      - "POSTGRES-CONFIG_URL=jdbc:postgresql://postgres:5432/postgres?currentSchema=catalogo&stringtype=unspecified"
       - "POSTGRES-CONFIG_USERNAME=${POSTGRES_CONFIG_USERNAME}"
       - "POSTGRES-CONFIG_PASSWORD=${POSTGRES_CONFIG_PASSWORD}"
       - "POSTGRES-CONFIG_SHOW-SQL=false"
@@ -71,7 +72,7 @@ services:
   kafka-to-elastic:
     image: tcero76/kafka.to.elastic:${SERVICE_VERSION:-latest}
     container_name: kafka-to-elastic
-    entrypoint: [ "check-kafka-topics-created.sh" ]
+    restart: always
     ports:
       - "5007:5007"
     volumes:
@@ -80,6 +81,7 @@ services:
     user: root
     environment:
       - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5007 -Xms128m -Xmx256m"
+      - "SPRING_CLOUD_CONFIG_URI=http://config-server:8888"
       - "KAFKA-CONFIG_TOPIC-NAME=input-catalogo"
       - "KAFKA-CONFIG_TOPIC-NAMES-TO-CREATE_0=input-catalogo"
       - "KAFKA-CONFIG_BOOTSTRAP-SERVERS=kafka-broker-1:9092, kafka-broker-2:9092, kafka-broker-3:9092"
@@ -100,10 +102,13 @@ services:
   reactive-elastic-query-service:
     image: tcero76/reactive.elastic.query.service:${SERVICE_VERSION:-latest}
     container_name: reactive-elastic-query-service
+    user: root
     ports:
       - "5008:5008"
+      - "8183:8183"
     environment:
       - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5008 -Xms128m -Xmx256m"
+      - "SPRING_CLOUD_CONFIG_URI=http://config-server:8888"
       - "ELASTIC-CONFIG_INDEX-NAME=scrap-index"
       - "ELASTIC-CONFIG_CONNECTION-URL=http://elastic-1:9200"
       - "ENCRYPT_KEY=${ENCRYPT_KEY}"
@@ -114,7 +119,6 @@ services:
       - elastic-3
     networks:
       - ${GLOBAL_NETWORK:-services}
-
 #  twitter-to-kafka-service:
 #    image: ${GROUP_ID}/twitter.to.kafka.service:${SERVICE_VERSION:-latest}
 #    ports:

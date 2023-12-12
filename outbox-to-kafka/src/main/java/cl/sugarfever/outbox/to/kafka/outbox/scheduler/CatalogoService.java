@@ -1,6 +1,6 @@
 package cl.sugarfever.outbox.to.kafka.outbox.scheduler;
 
-import cl.sugarfever.common.util.scheduler.Scheduler;
+import cl.sugarfever.scheduler.Scheduler;
 import cl.sugarfever.config.data.service.config.KafkaConfigData;
 import cl.sugarfever.kafka.avro.Ts;
 import cl.sugarfever.outbox.OutboxStatus;

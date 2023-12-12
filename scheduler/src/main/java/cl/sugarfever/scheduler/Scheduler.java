@@ -1,9 +1,8 @@
-package cl.sugarfever.common.util.scheduler.config;
+package cl.sugarfever.scheduler;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-@Configuration
-@EnableScheduling
-public class SchedulerConfig {
+public interface Scheduler {
+    void process();
 }

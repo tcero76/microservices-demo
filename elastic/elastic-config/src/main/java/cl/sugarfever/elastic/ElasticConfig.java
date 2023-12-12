@@ -19,8 +19,8 @@ import java.util.Objects;
 public class ElasticConfig {
     private final ElasticConfigData elasticConfigData;
 
-    public ElasticConfig(ElasticConfigData configData) {
-        this.elasticConfigData = configData;
+    public ElasticConfig(ElasticConfigData elasticConfigData) {
+        this.elasticConfigData = elasticConfigData;
     }
 
     @Bean

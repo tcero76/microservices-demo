@@ -1,6 +1,6 @@
 package cl.sugarfever.scrap.to.kafka.service.scheduler;
 
-import cl.sugarfever.common.util.scheduler.Scheduler;
+import cl.sugarfever.scheduler.Scheduler;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
