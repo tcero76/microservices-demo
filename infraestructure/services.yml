@@ -72,12 +72,13 @@ services:
   kafka-to-elastic:
     image: tcero76/kafka.to.elastic:${SERVICE_VERSION:-latest}
     container_name: kafka-to-elastic
-    restart: always
+    entrypoint: ["check-config-server-started.sh"]
     ports:
       - "5007:5007"
     volumes:
       - "./docker-logs:/workspace/outbox-to-kafka/logs"
       - "./check-kafka-topics-created.sh:/usr/local/bin/check-kafka-topics-created.sh"
+      - "./check-config-server-started.sh:/usr/local/bin/check-config-server-started.sh"
     user: root
     environment:
       - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5007 -Xms128m -Xmx256m"
@@ -102,7 +103,10 @@ services:
   reactive-elastic-query-service:
     image: tcero76/reactive.elastic.query.service:${SERVICE_VERSION:-latest}
     container_name: reactive-elastic-query-service
+    entrypoint: ["check-config-server-started.sh"]
     user: root
+    volumes:
+      - "./check-config-server-started.sh:/usr/local/bin/check-config-server-started.sh"
     ports:
       - "5008:5008"
       - "8183:8183"

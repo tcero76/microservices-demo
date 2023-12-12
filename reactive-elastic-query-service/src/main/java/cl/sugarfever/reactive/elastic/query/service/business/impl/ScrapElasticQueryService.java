@@ -11,10 +11,9 @@ import reactor.core.publisher.Flux;
 @Service
 @AllArgsConstructor
 public class ScrapElasticQueryService implements ElasticQueryService {
-
     private final ReactiveElasticQueryClient reactiveElasticQueryClient;
-
     private final ElasticQueryServiceResponseTransformer elasticQueryServiceResponseTransformer;
+
     @Override
     public Flux<ElasticQueryServiceResponseModel> getDocumentByText(String text) {
         return reactiveElasticQueryClient

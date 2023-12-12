@@ -8,4 +8,4 @@ spring:
       name: reactive-elastic-query-service,config-client
       uri: http://localhost:8888
       username: spring_cloud_user
-      password: '{cipher}004acca2b9ffe497b91dd969a8caf64927507619bd7f1777a6c5d4705276434d139d2d7db14bbbf4e2ca3289e54c803e'
+      password: '{cipher}648ff94716057c343dc4bcd77c7f3f9b313aaa738f98b0fcf9da204314c791161a03f27864faf8561706da81050178ac'

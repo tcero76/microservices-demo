@@ -12,10 +12,6 @@
     <dependencies>
         <dependency>
               <groupId>tcero76</groupId>
-            <artifactId>app-config-data</artifactId>
-        </dependency>
-        <dependency>
-              <groupId>tcero76</groupId>
             <artifactId>elastic-query-service-common</artifactId>
         </dependency>
         <dependency>
