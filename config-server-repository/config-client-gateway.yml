@@ -7,8 +7,7 @@
 #   sliding-window-size: 10
 #   min-number-of-calls: 10
 #   wait-duration-in-open-state: 60000
-
-server:
+server: 
   port: 9097
 
 # spring:
