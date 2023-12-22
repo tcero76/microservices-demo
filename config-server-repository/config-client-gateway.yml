@@ -30,7 +30,7 @@ spring:
           # filters:
           #   - RewritePath=/documents/get-doc-by-text(?<path>.*), /$\{path}
         - id: service2
-          uri: http://reactive-elastic-query-service:8183/documents/health
+          uri: http://reactive-elastic-query-service:8183
           predicates:
             - Path=/documents/health
           # filters:
