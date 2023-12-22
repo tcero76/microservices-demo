@@ -1,31 +1,31 @@
-# gateway-service:
-#   timeout-ms: 3000
-#   failure-rate-threshold: 50
-#   slow-call-rate-threshold: 50
-#   slow-call-duration-threshold: 50
-#   permitted-num-of-calls-in-half-open-state: 10
-#   sliding-window-size: 10
-#   min-number-of-calls: 10
-#   wait-duration-in-open-state: 60000
+gateway-service:
+  timeout-ms: 3000
+  failure-rate-threshold: 50
+  slow-call-rate-threshold: 50
+  slow-call-duration-threshold: 50
+  permitted-num-of-calls-in-half-open-state: 10
+  sliding-window-size: 10
+  min-number-of-calls: 10
+  wait-duration-in-open-state: 60000
 server: 
   port: 9097
 
-# spring:
-#   application:
-#     name: gateway-service
-#   cloud:
-#     loadbalancer:
-#       ribbon:
-#         enabled: false
-#     gateway:
-#       discovery:
-#         locator:
-#           enabled: false
-#           lowerCaseServiceId: true
-#       routes:
-#         - id: service1
-#           uri: http://localhost:8183/documents/get-doc-by-text
-#           predicates:
-#             - Path=/documents/get-doc-by-text
-#           filters:
-#             - RewritePath=/documents/get-doc-by-text(?<path>.*), /$\{path}
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+          lowerCaseServiceId: true
+      routes:
+        - id: service1
+          uri: http://localhost:8183/documents/get-doc-by-text
+          predicates:
+            - Path=/documents/get-doc-by-text
+          filters:
+            - RewritePath=/documents/get-doc-by-text(?<path>.*), /$\{path}
