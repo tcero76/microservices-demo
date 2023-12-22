@@ -27,5 +27,5 @@ spring:
           uri: lb://REACTIVE-ELASTIC-QUERY-SERVICE
           predicates:
             - Path=/documents/get-doc-by-text
-         filters:
-           - RewritePath=/documents/get-doc-by-text(?<path>.*), /$\{path}
+          filters:
+            - RewritePath=/documents/get-doc-by-text(?<path>.*), /$\{path}
