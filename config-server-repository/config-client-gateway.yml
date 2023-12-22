@@ -29,3 +29,9 @@ spring:
             - Path=/documents/get-doc-by-text
           # filters:
           #   - RewritePath=/documents/get-doc-by-text(?<path>.*), /$\{path}
+        - id: service2
+          uri: lb://REACTIVE-ELASTIC-QUERY-SERVICE
+          predicates:
+            - Path=/documents/health
+          # filters:
+          #   - RewritePath=/documents/get-doc-by-text(?<path>.*), /$\{path}
