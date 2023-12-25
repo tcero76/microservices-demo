@@ -28,7 +28,7 @@ server:
 
 spring:
   webflux:
-    base-path: /localhost
+    base-path: /documents
   codec:
     max-in-memory-size: 25MB
   data:
