@@ -24,6 +24,8 @@
     <module>elastic-query-service-common</module>
     <module>reactive-elastic-query-service</module>
     <module>scheduler</module>
+      <module>gateway</module>
+    <module>discovery-service</module>
   </modules>
   <name>backend</name>
 
@@ -45,6 +47,7 @@
     <elastic.version>7.9.1</elastic.version>
     <postgres-version>42.2.16</postgres-version>
     <micrometer-registry-prometheus.version>1.5.2</micrometer-registry-prometheus.version>
+    <logstash-logback-encoder.version>6.5</logstash-logback-encoder.version>
   </properties>
 
   <repositories>
@@ -53,6 +56,15 @@
       <url>https://packages.confluent.io/maven/</url>
     </repository>
   </repositories>
+
+
+  <dependencies>
+    <dependency>
+      <groupId>net.logstash.logback</groupId>
+      <artifactId>logstash-logback-encoder</artifactId>
+      <version>${logstash-logback-encoder.version}</version>
+    </dependency>
+  </dependencies>
 
   <dependencyManagement>
     <dependencies>
@@ -118,6 +130,11 @@
       </dependency>
       <dependency>
         <groupId>tcero76</groupId>
+        <artifactId>elastic-query-client</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>tcero76</groupId>
         <artifactId>elastic-config</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -148,7 +165,6 @@
         <version>${avro.version}</version>
       </dependency>
 
-
       <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-starter-config</artifactId>
@@ -157,6 +173,21 @@
       <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-config-server</artifactId>
+        <version>${spring-cloud.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-gateway</artifactId>
+        <version>${spring-cloud.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        <version>${spring-cloud.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
         <version>${spring-cloud.version}</version>
       </dependency>
       <dependency>
@@ -170,7 +201,6 @@
         <artifactId>spring-boot-starter-batch</artifactId>
         <version>${spring-boot.version}</version>
       </dependency>
-
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-security</artifactId>
@@ -206,18 +236,22 @@
         <artifactId>spring-retry</artifactId>
         <version>${spring-retry.version}</version>
       </dependency>
-
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-webflux</artifactId>
+        <version>${spring-boot.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
         <version>${spring-boot.version}</version>
       </dependency>
+
       <dependency>
         <groupId>org.elasticsearch.client</groupId>
         <artifactId>elasticsearch-rest-high-level-client</artifactId>
         <version>${elastic.version}</version>
       </dependency>
-
       <dependency>
         <groupId>org.elasticsearch</groupId>
         <artifactId>elasticsearch</artifactId>
@@ -254,7 +288,6 @@
 
     </dependencies>
   </dependencyManagement>
-
   <build>
     <plugins>
       <plugin>

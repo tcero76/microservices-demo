@@ -1,21 +1,26 @@
 package cl.sugarfever.reactive.elastic.query.service.config;
 
-import org.springframework.context.annotation.Bean;
+import cl.sugarfever.config.data.service.config.ElasticConfigData;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.client.ClientConfiguration;
 import org.springframework.data.elasticsearch.client.reactive.ReactiveElasticsearchClient;
 import org.springframework.data.elasticsearch.client.reactive.ReactiveRestClients;
 import org.springframework.data.elasticsearch.config.AbstractReactiveElasticsearchConfiguration;
-import org.springframework.security.config.web.server.ServerHttpSecurity;
-import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Configuration
-public class WebSecurityConfig extends AbstractReactiveElasticsearchConfiguration {
-        @Override
-        public ReactiveElasticsearchClient reactiveElasticsearchClient() {
-            final ClientConfiguration clientConfiguration = ClientConfiguration.builder()
-                    .connectedTo("172.28.0.3:9200")
-                    .build();
-            return ReactiveRestClients.create(clientConfiguration);
-        }
+@AllArgsConstructor
+public class ReactiveElasticConfig extends AbstractReactiveElasticsearchConfiguration {
+
+    private final ElasticConfigData elasticConfigData;
+    @Override
+    public ReactiveElasticsearchClient reactiveElasticsearchClient() {
+        UriComponents serverUri = UriComponentsBuilder.fromHttpUrl(elasticConfigData.getConnectionUrl()).build();
+        final ClientConfiguration clientConfiguration = ClientConfiguration.builder()
+                .connectedTo(serverUri.getHost()+":"+serverUri.getPort())
+                .build();
+        return ReactiveRestClients.create(clientConfiguration);
+    }
 }

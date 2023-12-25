@@ -5,6 +5,12 @@ target/
 !**/src/test/**/target/
 
 *.log
+**/logs/**
+**/docker-logs/**
+
+**/grafana/**
+**/prometheus/**
+
 
 ### STS ###
 .apt_generated

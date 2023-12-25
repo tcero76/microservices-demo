@@ -1,4 +1,4 @@
-package cl.sugarfever.elastic.query.client;
+package cl.sugarfever.reactive.elastic.query.service.repository;
 
 import cl.sugarfever.elastic.model.ScrapIndexModel;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;

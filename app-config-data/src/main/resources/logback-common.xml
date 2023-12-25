@@ -18,7 +18,6 @@
             </Pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- rollover daily -->
             <fileNamePattern>${DEV_HOME}/archived/${APP_NAME}-log.%d{yyyy-MM-dd}.%i.log
             </fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy
@@ -28,15 +27,29 @@
         </rollingPolicy>
     </appender>
 
+    <appender name="STASH" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${DEV_HOME}/logstash/${APP_NAME}.LOG</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${DEV_HOME}/logstash/archived/${APP_NAME}-log.%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+    </appender>
 
     <logger name="cl.sugarfever" level="info" additivity="false">
         <appender-ref ref="FILE"/>
         <appender-ref ref="STDOUT"/>
+        <appender-ref ref="STASH"/>
     </logger>
 
     <root level="info">
         <appender-ref ref="FILE"/>
         <appender-ref ref="STDOUT"/>
+        <appender-ref ref="STASH"/>
     </root>
 
 </included>

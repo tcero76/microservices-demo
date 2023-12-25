@@ -1,9 +1,9 @@
-package cl.sugarfever.elastic.query.client.service.impl;
+package cl.sugarfever.reactive.elastic.query.service.business.impl;
 
 import cl.sugarfever.config.data.service.config.ElasticQueryServiceConfigData;
 import cl.sugarfever.elastic.model.ScrapIndexModel;
 import cl.sugarfever.reactive.elastic.query.service.business.ReactiveElasticQueryClient;
-import cl.sugarfever.elastic.query.client.ElasticQueryRepository;
+import cl.sugarfever.reactive.elastic.query.service.repository.ElasticQueryRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;

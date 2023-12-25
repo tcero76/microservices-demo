@@ -1,2 +1,15 @@
-package cl.sugarfever.gateway;public class GateWayApplication {
+package cl.sugarfever.gateway;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.annotation.ComponentScan;
+
+@SpringBootApplication
+@EnableDiscoveryClient
+@ComponentScan(basePackages = "cl.sugarfever.gateway")
+public class GateWayApplication {
+        public static void main(String[] args) {
+                SpringApplication.run(GateWayApplication.class);
+        }
 }

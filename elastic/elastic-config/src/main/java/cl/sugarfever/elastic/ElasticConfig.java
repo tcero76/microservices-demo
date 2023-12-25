@@ -6,6 +6,8 @@ import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.elasticsearch.config.AbstractElasticsearchConfiguration;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
@@ -16,7 +18,7 @@ import java.util.Objects;
 
 @Configuration
 @EnableElasticsearchRepositories(basePackages = "cl.sugarfever.elastic")
-public class ElasticConfig {
+public class ElasticConfig extends AbstractElasticsearchConfiguration {
     private final ElasticConfigData elasticConfigData;
 
     public ElasticConfig(ElasticConfigData elasticConfigData) {
