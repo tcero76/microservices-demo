@@ -28,7 +28,7 @@ server:
 
 spring:
   webflux:
-    base-path: /reactive-elastic-query-service
+    base-path: /localhost
   codec:
     max-in-memory-size: 25MB
   data:
