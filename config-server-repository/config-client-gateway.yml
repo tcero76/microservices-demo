@@ -45,7 +45,7 @@ spring:
                 redis-rate-limiter.replenishRate: 5
                 redis-rate-limiter.burstCapacity: 10
   redis:
-    host: 192.168.32.2
+    host: 127.0.0.1
     port: 6379
 eureka:
   client:
