@@ -39,13 +39,13 @@ spring:
           predicates:
             - Path=/documents/health
           filters:
-          #   - RewritePath=/documents/get-doc-by-text(?<path>.*), /$\{path}
+            #   - RewritePath=/documents/get-doc-by-text(?<path>.*), /$\{path}
             - name: RequestRateLimiter
               args:
                 redis-rate-limiter.replenishRate: 5
                 redis-rate-limiter.burstCapacity: 10
   redis:
-    host: 127.0.0.1
+    host: redis-master
     port: 6379
 eureka:
   client:
