@@ -33,7 +33,7 @@ spring:
           predicates:
             - Path=/documents/health
           filters:
-            - RewritePath=/kafka-streams-service/(?<path>.*), /$\{path}
+#            - RewritePath=/kafka-streams-service/(?<path>.*), /$\{path}
             - name: CircuitBreaker
               args:
                 name: streamsServiceCircuitBreaker
