@@ -28,14 +28,22 @@ spring:
           uri: lb://REACTIVE-ELASTIC-QUERY-SERVICE
           predicates:
             - Path=/documents/get-doc-by-text
-          # filters:
-          #   - RewritePath=/documents/get-doc-by-text(?<path>.*), /$\{path}
+          filters:
+            #   - RewritePath=/documents/get-doc-by-text(?<path>.*), /$\{path}
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
         - id: service2
           uri: lb://REACTIVE-ELASTIC-QUERY-SERVICE
           predicates:
             - Path=/documents/health
-          # filters:
+          filters:
           #   - RewritePath=/documents/get-doc-by-text(?<path>.*), /$\{path}
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
 
 eureka:
   client:
