@@ -4,6 +4,7 @@ services:
     image: redis:${REDIS_VERSION:-latest}
     profiles:
       - front
+    container_name: redis-master
     hostname: redis
     command: ["redis-server", "--appendonly", "yes"]
     ports:
@@ -14,6 +15,7 @@ services:
     image: redis:${REDIS_VERSION:-latest}
     profiles:
       - front
+    container_name: redis-slave
     command: ["redis-server", "--slaveof", "redis-master", "6379"]
     ports:
       - "6380:6379"
