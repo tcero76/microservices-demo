@@ -7,8 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"cl.sugarfever.outbox.to.kafka", "cl.sugarfever.postgres.config",
-        "cl.sugarfever.config.data.service.config", "cl.sugarfever.kafka", "cl.sugarfever.scheduler"})
+@ComponentScan(basePackages = {"cl.sugarfever"})
 @EntityScan(basePackages = {"cl.sugarfever.postgres.model"})
 @EnableJpaRepositories(basePackages = {"cl.sugarfever.postgres.repo"})
 public class OutboxToKafkaApplication {

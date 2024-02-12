@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@ComponentScan(basePackages = "cl.sugarfever.gateway")
+@ComponentScan(basePackages = "cl.sugarfever")
 public class GateWayApplication {
         public static void main(String[] args) {
                 SpringApplication.run(GateWayApplication.class);

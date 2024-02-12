@@ -2,6 +2,10 @@ version: '3.7'
 services:
   config-server:
     image: tcero76/config.server:${SERVICE_VERSION:-latest}
+    profiles:
+      - scrap
+      - back
+      - front
     hostname: config-server
     container_name: config-server
     ports:
@@ -18,6 +22,8 @@ services:
       - ${GLOBAL_NETWORK:-services}
   scrap-to-postgres:
     image: tcero76/scrap.to.postgres:${SERVICE_VERSION:-latest}
+    profiles:
+      - scrap
     container_name: scrap-to-postgres
     ports:
       - "5005:5005"
@@ -41,6 +47,8 @@ services:
       - ${GLOBAL_NETWORK:-services}
   outbox-to-kafka:
     image: tcero76/outbox.to.kafka:${SERVICE_VERSION:-latest}
+    profiles:
+      - back
     container_name: outbox-to-kafka
     entrypoint: ["check-config-server-started.sh"]
     ports:
@@ -71,6 +79,8 @@ services:
       - ${GLOBAL_NETWORK:-services}
   kafka-to-elastic:
     image: tcero76/kafka.to.elastic:${SERVICE_VERSION:-latest}
+    profiles:
+      - back
     container_name: kafka-to-elastic
     entrypoint: ["check-config-server-started.sh"]
     ports:
@@ -102,6 +112,8 @@ services:
       - ${GLOBAL_NETWORK:-services}
   reactive-elastic-query-service:
     image: tcero76/reactive.elastic.query.service:${SERVICE_VERSION:-latest}
+    profiles:
+      - front
     container_name: reactive-elastic-query-service
     entrypoint: ["check-config-server-started.sh"]
     user: root
@@ -128,6 +140,8 @@ services:
       - ${GLOBAL_NETWORK:-services}
   discovery-service:
     image: tcero76/discovery.service:${SERVICE_VERSION:-latest}
+    profiles:
+      - front
     container_name: discovery-service
     entrypoint: ["check-config-server-started.sh"]
     user: root
@@ -146,6 +160,8 @@ services:
       - ${GLOBAL_NETWORK:-services}
   gateway:
     image: tcero76/gateway:${SERVICE_VERSION:-latest}
+    profiles:
+      - front
     container_name: gateway
     entrypoint: ["check-config-server-started.sh"]
     user: root
@@ -157,10 +173,12 @@ services:
       - "80:9090"
     environment:
       - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5010 -Xms128m -Xmx256m"
+      - "SPRING_REDIS_HOST=redis"
       - "ENCRYPT_KEY=${ENCRYPT_KEY}"
       - "SPRING_CLOUD_CONFIG_URI=http://config-server:8888"
     depends_on:
       - config-server
       - discovery-service
+      - redis-master
     networks:
       - ${GLOBAL_NETWORK:-services}

@@ -1,9 +1,6 @@
 package cl.sugarfever.postgres.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -20,6 +17,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Table(name = "ts", schema = "catalogo")
 @Entity
+@ToString
 public class Ts implements Serializable {
 
     @NotNull(message = " Id_ts:Valor no puede ser vacío")
@@ -44,13 +42,13 @@ public class Ts implements Serializable {
     private String medidas;
     @Column(name = "seccion")
     private String seccion;
-    @NotEmpty(message = "Depilacion:Valor no puede ser vacío")
+    @NotNull(message = "Depilacion:Valor no puede ser vacío")
     @Column(name = "depilacion")
     private String depilacion;
     @NotEmpty(message = "Ubicacion:Valor no puede ser vacío")
     @Column(name = "ubicacion")
     private String ubicacion;
-    @NotEmpty(message = "Horario:Valor no puede ser vacío")
+    @NotNull(message = "Horario:Valor no puede ser vacío")
     @Column(name = "horario")
     private String horario;
     @NotEmpty(message = "Descripcion:Valor no puede ser vacío")
@@ -64,6 +62,7 @@ public class Ts implements Serializable {
     @NotEmpty(message = "Estatura:Valor no puede ser vacío")
     @Column(name = "estatura")
     private String estatura;
+    @NotEmpty(message = "Valor: no puede ser vacío")
     @Column(name = "valor")
     private String valor;
     @Column(name = "video")

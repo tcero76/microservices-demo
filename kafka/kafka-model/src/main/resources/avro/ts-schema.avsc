@@ -113,10 +113,12 @@
                                         }
                                     }, {
                                         "name" : "nombre",
-                                        "type" : "string"
+                                        "type" : "string",
+                                        "default": ""
                                     }, {
                                         "name" : "adicional",
-                                        "type" : "boolean"
+                                        "type" : "boolean",
+                                        "default": false
                                     } ]
                                 },
                                 "java-class" : "java.util.List"

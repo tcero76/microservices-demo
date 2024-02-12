@@ -6,8 +6,8 @@ import cl.sugarfever.postgres.mapper.TsMapper;
 import cl.sugarfever.scrap.to.kafka.service.service.TsService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service

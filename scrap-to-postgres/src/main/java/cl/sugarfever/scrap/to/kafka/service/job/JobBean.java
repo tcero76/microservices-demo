@@ -2,7 +2,9 @@ package cl.sugarfever.scrap.to.kafka.service.job;
 
 import cl.sugarfever.postgres.model.Ts;
 import cl.sugarfever.scrap.to.kafka.service.job.impl.process.EscortNorteProcess;
+import cl.sugarfever.scrap.to.kafka.service.job.impl.process.RelaxProcess;
 import cl.sugarfever.scrap.to.kafka.service.job.impl.reader.EscortNorteReader;
+import cl.sugarfever.scrap.to.kafka.service.job.impl.reader.RelaxReader;
 import cl.sugarfever.scrap.to.kafka.service.job.impl.reader.StandardReader;
 import lombok.AllArgsConstructor;
 import org.jsoup.nodes.Document;
@@ -28,6 +30,8 @@ public class JobBean {
     private final JobExecutionListener jobExecutionListener;
     private final EscortNorteReader escortNorteReader;
     private final EscortNorteProcess escortNorteProcess;
+    private final RelaxReader relaxReader;
+    private final RelaxProcess relaxProcess;
 
     @Bean
     public Job JobScrapy() {
@@ -44,16 +48,16 @@ public class JobBean {
                 .processor(escortNorteProcess)
                 .writer(writer)
                 .build();
-//        Step relaxStep = stepBuilderFactory.get("relax-step")
-//                .<Document,Ts>chunk(1)
-//                .reader(relaxReader)
-//                .processor(relaxProcess)
-//                .writer(writer)
-//                .build();
+        Step relaxStep = stepBuilderFactory.get("relax-step")
+                .<Document,Ts>chunk(500)
+                .reader(relaxReader)
+                .processor(relaxProcess)
+                .writer(writer)
+                .build();
         Job job = jobBuilderFactory.get("accounting-job")
                 .incrementer(new RunIdIncrementer())
-//                .start(relaxStep)
-                .start(escortNorteStep)
+                .start(relaxStep)
+                .next(escortNorteStep)
                 .next(estandarStep)
                 .listener(jobExecutionListener)
                 .build();

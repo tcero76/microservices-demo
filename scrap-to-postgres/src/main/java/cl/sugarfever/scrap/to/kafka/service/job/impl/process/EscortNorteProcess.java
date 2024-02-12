@@ -22,6 +22,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.StringBufferInputStream;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -69,9 +71,10 @@ public class EscortNorteProcess implements ItemProcessor<Document, Ts> {
                 .idpagina(idpagina)
                 .nombre(doc.select("h1#nombre").text())
                 .sexo("")
+                .seccion("")
+                .video("")
                 .edad(Integer.valueOf(cuadroArriba.get(1).text().replaceAll("[^0-9]", "")))
                 .medidas(cuadroArriba.get(2).text())
-                .seccion("")
                 .depilacion(cuadroArriba.get(0).text())
                 .ubicacion(doc.select("dl#sector dd").text())
                 .horario(doc.select("div#datos5 dd").text())
@@ -87,7 +90,7 @@ public class EscortNorteProcess implements ItemProcessor<Document, Ts> {
                 .ciudad(doc.select("h2#fichaseccion").text())
                 .imagenes(imagenes.size()>0?imagenes:(new HashSet<Imagen>()))
                 .imagen(imagenes.stream().findFirst().isEmpty()?null:imagenes.stream().findFirst().get().getUrl())
-                .video("")
+                .fecharegistro(Timestamp.from(Instant.now()).getTime())
                 .build();
         log.info("Ts: capturado: {}", ts.getNombre());
         if (imagenes != null) {

@@ -2,6 +2,8 @@ version: '3.7'
 services:
   grafana:
     image: grafana/grafana:${GRAFANA_VERSION:-latest}
+    profiles:
+      - monitoring
     hostname: grafana
     container_name: grafana
     ports:
@@ -15,6 +17,8 @@ services:
       - ${GLOBAL_NETWORK:-grafana}
   prometheus:
     image: prom/prometheus:${PROMETHEUS_VERSION:-latest}
+    profiles:
+      - monitoring
     hostname: prometheus
     container_name: prometheus
     ports:
@@ -22,5 +26,14 @@ services:
     volumes:
       - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
       - ./prometheus:/prometheus
+    networks:
+      - ${GLOBAL_NETWORK:-prometheus}
+  node_exporter:
+    image: prom/node-exporter
+    profiles:
+      - monitoring
+    container_name: node_exporter
+    ports:
+      - "9100:9100"
     networks:
       - ${GLOBAL_NETWORK:-prometheus}

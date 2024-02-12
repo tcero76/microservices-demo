@@ -8,8 +8,10 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.reactive.function.server.EntityResponse;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Flux;
@@ -32,14 +34,9 @@ public class ElasticDocumentController {
                                 .log(), Integer.class
                 );
     }
-    @GetMapping(value = "/documents/health", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
-    public Mono<ServerResponse> health() {
-        return ServerResponse.ok()
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(
-                        Flux.just(1, 2, 3, 4)
-                                .log(), Integer.class
-                );
+    @GetMapping(value = "/health", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> health() {
+        return ResponseEntity.ok("health");
     }
     @PostMapping(value = "/get-doc-by-text", produces = MediaType.TEXT_EVENT_STREAM_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Flux<ElasticQueryServiceResponseModel> getDocumentByText(@RequestBody @Valid ElasticQueryServiceRequestModel elasticQueryServiceRequestModel) {
