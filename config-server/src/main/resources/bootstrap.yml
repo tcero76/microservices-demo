@@ -5,11 +5,10 @@ spring:
     config:
       server:
         git:
-          uri: file://home/leonardo/Documentos/Projectos/putasfever/backend
-#          uri: https://github.com/tcero76/microservices-demo
+          uri: https://github.com/tcero76/microservices-demo
           searchPaths: config-server-repository
           default-label: master
-#          username: tcero76
+          username: tcero76
           clone-on-start: true
     fail-fast: true
   security:

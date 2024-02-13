@@ -171,6 +171,8 @@ services:
     ports:
       - "5010:5010"
       - "80:9090"
+    links:
+      - "redis-master:redis"
     environment:
       - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5010 -Xms128m -Xmx256m"
       - "SPRING_REDIS_HOST=redis"
