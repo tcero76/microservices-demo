@@ -29,7 +29,7 @@ spring:
           predicates:
             - Path=/documents/get-doc-by-text
         - id: service2
-          uri: http://localhost:8183
+          uri: lb://REACTIVE-ELASTIC-QUERY-SERVICE
           predicates:
             - Path=/documents/health
           # filters:
