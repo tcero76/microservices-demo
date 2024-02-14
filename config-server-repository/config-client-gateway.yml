@@ -29,11 +29,11 @@ spring:
           predicates:
             - Path=/documents/get-doc-by-text
         - id: service2
-          uri: lb://REACTIVE-ELASTIC-QUERY-SERVICE
+          uri: http://localhost:8183
           predicates:
             - Path=/documents/health
-          filters:
-           - RewritePath=/REACTIVE-ELASTIC-QUERY-SERVICE/(?<path>.*), /$\{path}
+          # filters:
+          #  - RewritePath=/REACTIVE-ELASTIC-QUERY-SERVICE/(?<path>.*), /$\{path}
             # - name: RequestRateLimiter
             #   args:
             #     redis-rate-limiter.replenishRate: 5
