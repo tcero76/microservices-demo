@@ -34,11 +34,11 @@ spring:
             - Path=/documents/health
           filters:
 #            - RewritePath=/elastic-query-service/(?<path>.*), /$\{path}
-            - name: RequestRateLimiter
-              args:
-                redis-rate-limiter.replenishRate: 5
-                redis-rate-limiter.burstCapacity: 10
-                key-resolver: "#{@authHeaderResolver}"
+            # - name: RequestRateLimiter
+            #   args:
+            #     redis-rate-limiter.replenishRate: 5
+            #     redis-rate-limiter.burstCapacity: 10
+            #     key-resolver: "#{@authHeaderResolver}"
 #            - name: CircuitBreaker
 #              args:
 #                name: queryServiceCircuitBreaker
