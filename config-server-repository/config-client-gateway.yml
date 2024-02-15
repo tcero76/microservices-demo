@@ -29,7 +29,6 @@ spring:
           predicates:
             - Path=/documents/get-doc-by-text
           filters:
-           # - RewritePath=/REACTIVE-ELASTIC-QUERY-SERVICE/(?<path>.*), /$\{path}
             - name: RequestRateLimiter
               args:
                 redis-rate-limiter.replenishRate: 5
@@ -44,12 +43,15 @@ spring:
           predicates:
             - Path=/documents/health
           filters:
-            # - RewritePath=/REACTIVE-ELASTIC-QUERY-SERVICE/(?<path>.*), /$\{path}
             - name: RequestRateLimiter
               args:
                 redis-rate-limiter.replenishRate: 5
                 redis-rate-limiter.burstCapacity: 10
                 key-resolver: "#{@authHeaderResolver}"
+            - name: CircuitBreaker
+              args:
+                name: healthServiceCircuitBreaker
+                fallbackUri: forward:/fallback/health-fallback
   redis:
     host: 127.0.0.1
     port: 6379
