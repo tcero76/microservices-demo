@@ -6,7 +6,7 @@ gateway-service:
   permitted-num-of-calls-in-half-open-state: 10
   sliding-window-size: 10
   min-number-of-calls: 10
-  wait-duration-in-open-state:
+  wait-duration-in-open-state: 60000
 
 server: 
   port: 9091
