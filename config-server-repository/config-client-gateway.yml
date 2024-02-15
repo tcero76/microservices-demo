@@ -49,7 +49,7 @@ spring:
            - name: CircuitBreaker
              args:
                name: queryServiceCircuitBreaker
-               fallbackUri: forward:/REACTIVE-ELASTIC-QUERY-SERVICE/fallback/query-fallback
+               fallbackUri: forward:/fallback/query-fallback
   redis:
     host: 127.0.0.1
     port: 6379
