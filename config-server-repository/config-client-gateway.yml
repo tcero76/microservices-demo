@@ -28,6 +28,13 @@ spring:
           uri: lb://REACTIVE-ELASTIC-QUERY-SERVICE
           predicates:
             - Path=/documents/get-doc-by-text
+          filters:
+           # - RewritePath=/REACTIVE-ELASTIC-QUERY-SERVICE/(?<path>.*), /$\{path}
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
+                key-resolver: "#{@authHeaderResolver}"
         - id: service2
           uri: lb://REACTIVE-ELASTIC-QUERY-SERVICE
           predicates:
