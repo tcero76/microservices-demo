@@ -46,10 +46,10 @@ spring:
                 redis-rate-limiter.replenishRate: 5
                 redis-rate-limiter.burstCapacity: 10
                 key-resolver: "#{@authHeaderResolver}"
-           # - name: CircuitBreaker
-           #   args:
-           #     name: queryServiceCircuitBreaker
-           #     fallbackUri: forward:/REACTIVE-ELASTIC-QUERY-SERVICE/fallback/query-fallback
+           - name: CircuitBreaker
+             args:
+               name: queryServiceCircuitBreaker
+               fallbackUri: forward:/REACTIVE-ELASTIC-QUERY-SERVICE/fallback/query-fallback
   redis:
     host: 127.0.0.1
     port: 6379
