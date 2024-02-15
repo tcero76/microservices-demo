@@ -32,13 +32,13 @@ spring:
           uri: lb://REACTIVE-ELASTIC-QUERY-SERVICE
           predicates:
             - Path=/documents/health
-          # filters:
-          #  - RewritePath=/REACTIVE-ELASTIC-QUERY-SERVICE/(?<path>.*), /$\{path}
-            # - name: RequestRateLimiter
-            #   args:
-            #     redis-rate-limiter.replenishRate: 5
-            #     redis-rate-limiter.burstCapacity: 10
-            #     key-resolver: "#{@authHeaderResolver}"
+          filters:
+           # - RewritePath=/REACTIVE-ELASTIC-QUERY-SERVICE/(?<path>.*), /$\{path}
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
+                key-resolver: "#{@authHeaderResolver}"
 #            - name: CircuitBreaker
 #              args:
 #                name: queryServiceCircuitBreaker
