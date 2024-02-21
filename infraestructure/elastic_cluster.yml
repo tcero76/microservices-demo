@@ -5,6 +5,7 @@ services:
     profiles:
       - front
       - back
+      - monitoring
     hostname: elastic-1
     container_name: elastic-1
     environment:
@@ -29,6 +30,7 @@ services:
     profiles:
       - front
       - back
+      - monitoring
     container_name: elastic-2
     environment:
       - node.name=elastic-2
@@ -50,6 +52,7 @@ services:
     profiles:
       - front
       - back
+      - monitoring
     container_name: elastic-3
     environment:
       - node.name=elastic-3
@@ -71,6 +74,7 @@ services:
     profiles:
       - front
       - back
+      - monitoring
     container_name: kibana
     ports:
       - 5601:5601
@@ -87,6 +91,7 @@ services:
     profiles:
       - front
       - back
+      - monitoring
     command: logstash -f /etc/logstash/conf.d/logback.conf
     container_name: logstash
     ports:

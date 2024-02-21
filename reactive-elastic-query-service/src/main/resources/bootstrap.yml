@@ -1,4 +1,6 @@
 spring:
+  main:
+    web-application-type: reactive
   application:
     name: reactive-elastic-query-service
   profiles:
@@ -17,3 +19,5 @@ eureka:
   instance:
     lease-expiration-duration-in-seconds: 5
     lease-renewal-interval-in-seconds: 2
+log:
+  app-name: reactive-elastic-query-service

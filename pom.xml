@@ -18,14 +18,15 @@
     <module>kafka</module>
     <module>common-config</module>
     <module>elastic</module>
-    <module>scrap-to-postgres</module>
-    <module>outbox-to-kafka</module>
-    <module>kafka-to-elasticsearch</module>
+    <module>scrap-to-postgres-service</module>
+    <module>outbox-to-kafka-service</module>
+    <module>kafka-to-elasticsearch-service</module>
     <module>elastic-query-service-common</module>
     <module>reactive-elastic-query-service</module>
     <module>scheduler</module>
-      <module>gateway</module>
+    <module>gateway-service</module>
     <module>discovery-service</module>
+    <module>mdc-interceptor</module>
   </modules>
   <name>backend</name>
 
@@ -63,7 +64,6 @@
     <dependency>
       <groupId>net.logstash.logback</groupId>
       <artifactId>logstash-logback-encoder</artifactId>
-      <version>${logstash-logback-encoder.version}</version>
     </dependency>
   </dependencies>
 
@@ -149,6 +149,11 @@
         <artifactId>scheduler</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <dependency>
+        <groupId>tcero76</groupId>
+        <artifactId>mdc-interceptor</artifactId>
+        <version>${project.version}</version>
+      </dependency>
 
       <dependency>
         <groupId>org.springframework.kafka</groupId>
@@ -204,7 +209,7 @@
       </dependency>
       <dependency>
         <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-circuitbreaker-resilience4j</artifactId>
+        <artifactId>spring-cloud-starter-circuitbreaker-reactor-resilience4j</artifactId>
         <version>${spring-cloud-starter-circuitbreaker-reactor-resilience4j.version}</version>
       </dependency>
       <dependency>
@@ -295,6 +300,12 @@
         <groupId>io.micrometer</groupId>
         <artifactId>micrometer-registry-prometheus</artifactId>
         <version>${micrometer-registry-prometheus.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>net.logstash.logback</groupId>
+        <artifactId>logstash-logback-encoder</artifactId>
+        <version>${logstash-logback-encoder.version}</version>
       </dependency>
 
     </dependencies>

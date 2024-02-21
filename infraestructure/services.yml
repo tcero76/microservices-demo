@@ -20,11 +20,11 @@ services:
       - "SPRING_CLOUD_CONFIG_SERVER_GIT_PASSWORD=${GIT_PASSWORD}"
     networks:
       - ${GLOBAL_NETWORK:-services}
-  scrap-to-postgres:
-    image: tcero76/scrap.to.postgres:${SERVICE_VERSION:-latest}
+  scrap-to-postgres-service:
+    image: tcero76/scrap.to.postgres.service:${SERVICE_VERSION:-latest}
     profiles:
       - scrap
-    container_name: scrap-to-postgres
+    container_name: scrap-to-postgres-service
     ports:
       - "5005:5005"
     volumes:
@@ -40,16 +40,17 @@ services:
       - "POSTGRES-CONFIG_USERNAME=${POSTGRES_CONFIG_USERNAME}"
       - "POSTGRES-CONFIG_PASSWORD=${POSTGRES_CONFIG_PASSWORD}"
       - "POSTGRES-CONFIG_SHOW-SQL=false"
+      - "LOG_APP-NAME=scrap-to-postgres-service"
     depends_on:
       - config-server
       - postgres
     networks:
       - ${GLOBAL_NETWORK:-services}
   outbox-to-kafka:
-    image: tcero76/outbox.to.kafka:${SERVICE_VERSION:-latest}
+    image: tcero76/outbox.to.kafka.service:${SERVICE_VERSION:-latest}
     profiles:
       - back
-    container_name: outbox-to-kafka
+    container_name: outbox-to-kafka-services
     entrypoint: ["check-config-server-started.sh"]
     ports:
       - "5006:5006"
@@ -78,10 +79,10 @@ services:
     networks:
       - ${GLOBAL_NETWORK:-services}
   kafka-to-elastic:
-    image: tcero76/kafka.to.elastic:${SERVICE_VERSION:-latest}
+    image: tcero76/kafka.to.elastic.service:${SERVICE_VERSION:-latest}
     profiles:
       - back
-    container_name: kafka-to-elastic
+    container_name: kafka-to-elastic-services
     entrypoint: ["check-config-server-started.sh"]
     ports:
       - "5007:5007"
@@ -159,10 +160,10 @@ services:
     networks:
       - ${GLOBAL_NETWORK:-services}
   gateway:
-    image: tcero76/gateway:${SERVICE_VERSION:-latest}
+    image: tcero76/gateway.service:${SERVICE_VERSION:-latest}
     profiles:
       - front
-    container_name: gateway
+    container_name: gateway-services
     entrypoint: ["check-config-server-started.sh"]
     user: root
     volumes:
@@ -178,6 +179,7 @@ services:
       - "SPRING_REDIS_HOST=redis"
       - "ENCRYPT_KEY=${ENCRYPT_KEY}"
       - "SPRING_CLOUD_CONFIG_URI=http://config-server:8888"
+      - "EUREKA_CLIENT_SERVICE-URL_DEFAULT-ZONE=http://discovery-service:8761/eureka/"
     depends_on:
       - config-server
       - discovery-service
