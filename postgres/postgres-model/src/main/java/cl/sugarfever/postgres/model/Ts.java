@@ -3,22 +3,19 @@ package cl.sugarfever.postgres.model;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "ts", schema = "catalogo")
+@Table(name = "history", schema = "catalogo")
 @Entity
 @ToString
-public class Ts implements Serializable {
+public class History {
 
     @NotNull(message = " Id_ts:Valor no puede ser vacío")
     @Id
@@ -79,10 +76,10 @@ public class Ts implements Serializable {
     @NotEmpty(message = "Ciudad:Valor no puede ser vacío")
     @Column(name = "ciudad")
     private String ciudad;
-//    @NotEmpty(message = "Servicios: Valor no puede ser vacío")
+    //    @NotEmpty(message = "Servicios: Valor no puede ser vacío")
     @OneToMany(mappedBy = "ts", fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.REMOVE })
     private Set<Servicio> servicios;
-//    @NotEmpty(message = "Imagenes: Valor no puede ser vacío")
+    //    @NotEmpty(message = "Imagenes: Valor no puede ser vacío")
     @OneToMany(mappedBy = "ts", fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.REMOVE })
     private Set<Imagen> imagenes;
     @NotNull(message = "Fecharegistro: Valor no puede ser vacío")

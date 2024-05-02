@@ -1,0 +1,11 @@
+
+postgres-config:
+  url: jdbc:postgresql://localhost:5432/postgres?currentSchema=catalogo&stringtype=unspecified
+  username: root
+  password: root
+  database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+  show-sql: false
+
+redis-config:
+  master-url: redis://localhost:6379
+  slave-url: redis://localhost:6380
