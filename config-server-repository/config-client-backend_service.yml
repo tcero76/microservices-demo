@@ -1,3 +1,5 @@
+server:
+  port: 8184
 
 postgres-config:
   url: jdbc:postgresql://localhost:5432/postgres?currentSchema=catalogo&stringtype=unspecified
