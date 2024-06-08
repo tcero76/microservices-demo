@@ -6,7 +6,7 @@ scrap-to-kafka:
   scheduler-initial-delay: 1000
   scheduler:
     initial:
-      delay: 900000
+      delay: 1000
     fixed:
       rate: 900000
 
